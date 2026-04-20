@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #0f172a;
+  color: white;
+  text-align: center;
+  padding: 30px;
+}
+
+.container {
+  max-width: 400px;
+  margin: auto;
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+img {
+  width: 200px;
+  margin: 20px 0;
+}
+
+button {
+  padding: 12px;
+  width: 100%;
+  background: #22c55e;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+}
+
+.success {
+    
+  color: #22c55e;
+  margin-top: 20px;
+}
+/* LOADER */
+.spinner {
+  border: 5px solid #334155;
+  border-top: 5px solid #22c55e;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  margin: auto;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>💳 Complete Payment</h2>
+
+<p id="cause"></p>
+<p id="amount"></p>
+
+<!-- QR IMAGE -->
+<img src="WhatsApp Image 2026-04-12 at 12.47.57 PM.jpeg" alt="Scan to Pay">
+
+<p>Scan & Pay using UPI</p>
+
+<button onclick="startPayment()">Pay Now</button>
+
+<div id="loader" style="display:none; margin-top:20px;">
+  <div class="spinner"></div>
+  <p>Processing Payment...</p>
+</div>
+
+<p id="status" class="success"></p>
+<button id="downloadBtn" onclick="downloadReceipt()" style="display:none; margin-top:10px;">
+  Download Receipt 📄
+</button>
+<script>
+let donation = JSON.parse(localStorage.getItem("currentDonation"));
+
+if (donation) {
+  document.getElementById("cause").innerText = "Cause: " + donation.cause;
+  document.getElementById("amount").innerText = "Amount: ₹" + donation.amount;
+}
+
+function startPayment() {
+  document.getElementById("loader").style.display = "block";
+
+  // fake delay like real payment
+  setTimeout(() => {
+    completePayment();
+  }, 2500);
+}
+
+function completePayment() {
+  let donations = JSON.parse(localStorage.getItem("donations")) || [];
+
+  donations.push(donation);
+
+  localStorage.setItem("donations", JSON.stringify(donations));
+
+  document.getElementById("loader").style.display = "none";
+  document.getElementById("status").innerText = "✅ Payment Successful!";
+
+  setTimeout(() => {
+    window.location.href = "donor.html";
+  }, 2000);
+}
+</script>
+</body>
+</html>

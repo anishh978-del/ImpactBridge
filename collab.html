@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Collaboration Hub</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #0f172a;
+  color: white;
+  padding: 20px;
+}
+
+/* TITLE */
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* SECTION */
+.section {
+  margin-bottom: 50px;
+}
+
+.section h2 {
+  margin-bottom: 15px;
+}
+
+/* GRID */
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* CARD */
+.card {
+  background: rgba(255,255,255,0.08);
+  padding: 20px;
+  border-radius: 12px;
+  width: 260px;
+  backdrop-filter: blur(10px);
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+button {
+  margin-top: 10px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-green { background: #22c55e; color: white; }
+.btn-blue { background: #3b82f6; color: white; }
+.btn-orange { background: #f97316; color: white; }
+
+/* CHAT */
+.chat-btn {
+  background: #06b6d4;
+  width: 100%;
+}
+
+/* BACK */
+.back {
+  display: block;
+  text-align: center;
+  margin-top: 30px;
+  color: #38bdf8;
+  text-decoration: none;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🤝 Collaboration Hub</h1>
+
+<!-- RESOURCE SHARING -->
+<div class="section">
+  <h2>📦 Resource Sharing</h2>
+  <div class="grid">
+
+    <div class="card">
+      <h3>Offer: Training Materials</h3>
+      <p>NGO: SEWA</p>
+      <button class="btn-green">Offer</button>
+    </div>
+
+    <div class="card">
+      <h3>Request: Volunteers</h3>
+      <p>NGO: Rural Help</p>
+      <button class="btn-orange">Request</button>
+    </div>
+
+  </div>
+</div>
+<div class="container">
+
+  <!-- ALL your sections here -->
+
+</div>
+<!-- PEER SUPPORT -->
+<div class="section">
+  <h2>🤝 Peer-to-Peer Support</h2>
+  <div class="grid">
+
+    <div class="card">
+      <h3>Skill Sharing</h3>
+      <p>Microfinance Training by SEWA</p>
+      <button class="btn-blue">Join</button>
+    </div>
+
+    <div class="card">
+      <h3>Fund Lending</h3>
+      <p>Co-funding for small NGOs</p>
+      <button class="btn-green">Support</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- CAMPAIGNS -->
+<div class="section">
+  <h2>📢 Joint Campaigns</h2>
+  <div class="grid">
+
+    <div class="card">
+      <h3>Education in Bihar</h3>
+      <p>3 NGOs collaborating</p>
+      <button class="btn-blue">View</button>
+    </div>
+
+    <div class="card">
+      <h3>Women Empowerment</h3>
+      <p>5 NGOs collaborating</p>
+      <button class="btn-blue">View</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- CHALLENGE BOARD -->
+<div class="section">
+  <h2>💡 Challenge Board</h2>
+  <div class="grid">
+
+    <div class="card">
+      <h3>Scaling in Tribal Areas</h3>
+      <p>Need logistics support</p>
+      <button class="btn-orange">Respond</button>
+    </div>
+
+    <div class="card">
+      <h3>Digital Adoption</h3>
+      <p>Need training tools</p>
+      <button class="btn-orange">Help</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- MATCHMAKING -->
+<div class="section">
+  <h2>🧠 Collaboration Matchmaking</h2>
+  <div class="grid">
+
+    <div class="card">
+      <h3>PARD India</h3>
+      <p>Focus: Education, Andhra Pradesh</p>
+      <p>👉 Suggested: Pratham (National)</p>
+      <button class="btn-green">Connect</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- QUICK CONNECT -->
+<div class="section">
+  <h2>💬 Quick Connect</h2>
+  <div class="grid">
+
+    <div class="card">
+      <h3>Direct NGO Chat</h3>
+      <button class="chat-btn">Message</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- TRANSPARENCY -->
+<div class="section">
+  <h2>🔍 Transparency</h2>
+  <div class="grid">
+
+    <div class="card">
+      <h3>Resource Shared</h3>
+      <p>SEWA → Rural Help</p>
+      <p>Training Materials</p>
+    </div>
+
+    <div class="card">
+      <h3>Funding Collaboration</h3>
+      <p>Pratham → Local NGO</p>
+      <p>₹5 Lakhs Support</p>
+    </div>
+
+  </div>
+</div>
+
+<a href="index.html" class="back">← Back to Home</a>
+
+</body>
+</html>

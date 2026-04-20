@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verified NGOs</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #0f172a;
+  color: white;
+  padding: 20px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* TITLE */
+h1 {
+  text-align: center;
+}
+
+.sub {
+  text-align: center;
+  opacity: 0.7;
+  margin-bottom: 20px;
+}
+
+/* SEARCH + FILTER */
+.controls {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+input, select {
+  padding: 8px;
+  margin: 5px;
+  border-radius: 6px;
+  border: none;
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+/* CARD */
+.card {
+  background: rgba(255,255,255,0.08);
+  padding: 20px;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+/* VERIFIED BADGE */
+.badge {
+  color: #22c55e;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* PROGRESS BAR */
+.bar {
+  background: #1e293b;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+
+.fill {
+  height: 8px;
+  background: #22c55e;
+}
+
+/* BUTTONS */
+.btn {
+  margin-top: 8px;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.green { background: #22c55e; color: white; }
+.blue { background: #3b82f6; color: white; }
+.orange { background: #f97316; color: white; }
+
+/* BACK */
+.back {
+  display: block;
+  text-align: center;
+  margin-top: 30px;
+  color: #38bdf8;
+  text-decoration: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>✅ Verified NGOs</h1>
+<p class="sub">Trusted Partners for Impact</p>
+
+<!-- SEARCH + FILTER -->
+<div class="controls">
+  <input type="text" id="search" placeholder="Search NGO..." onkeyup="searchNGO()">
+
+  <select onchange="filterRegion(this.value)">
+    <option value="all">All Regions</option>
+    <option value="north">North</option>
+    <option value="south">South</option>
+  </select>
+
+  <select onchange="filterType(this.value)">
+    <option value="all">All Focus</option>
+    <option value="education">Education</option>
+    <option value="health">Health</option>
+  </select>
+</div>
+
+<!-- NGO GRID -->
+<div class="grid" id="ngoList">
+
+  <!-- NGO 1 -->
+  <div class="card" data-region="north" data-type="education">
+    <h3>SEWA <span class="badge" title="Verified by platform – compliance checked">✔</span></h3>
+    <p>Gujarat</p>
+    <p>Focus: Women Empowerment</p>
+    <p>Impact: 50,000+ women supported</p>
+
+    <p>Funding:</p>
+    <div class="bar"><div class="fill" style="width:70%"></div></div>
+
+    <p>Compliance: ✔ FCRA Approved</p>
+    <p>Last Report: Mar 2026</p>
+
+    <button class="btn green" onclick="goDonate()">Donate</button>
+    <button class="btn blue" onclick="goCollab()">Collaborate</button>
+    <button class="btn orange">View Profile</button>
+  </div>
+
+  <!-- NGO 2 -->
+  <div class="card" data-region="north" data-type="education">
+    <h3>Pratham <span class="badge" title="Verified by platform – transparency checked">✔</span></h3>
+    <p>Delhi</p>
+    <p>Focus: Education</p>
+    <p>Impact: 1M+ children reached</p>
+
+    <p>Funding:</p>
+    <div class="bar"><div class="fill" style="width:60%"></div></div>
+
+    <p>Compliance: ✔ CSR Partner</p>
+    <p>Last Report: Feb 2026</p>
+
+    <button class="btn green" onclick="goDonate()">Donate</button>
+    <button class="btn blue" onclick="goCollab()">Collaborate</button>
+    <button class="btn orange">View Profile</button>
+  </div>
+
+  <!-- NGO 3 -->
+  <div class="card" data-region="south" data-type="health">
+    <h3>HealthFirst <span class="badge" title="Verified by platform – compliance checked">✔</span></h3>
+    <p>Karnataka</p>
+    <p>Focus: Healthcare</p>
+    <p>Impact: 20,000 patients treated</p>
+
+    <p>Funding:</p>
+    <div class="bar"><div class="fill" style="width:40%"></div></div>
+
+    <p>Compliance: ✔ FCRA Approved</p>
+    <p>Last Report: Jan 2026</p>
+
+    <button class="btn green" onclick="goDonate()">Donate</button>
+    <button class="btn blue" onclick="goCollab()">Collaborate</button>
+    <button class="btn orange">View Profile</button>
+  </div>
+
+</div>
+
+<a href="index.html" class="back">← Back to Home</a>
+
+</div>
+
+<script>
+function goDonate() {
+  window.location.href = "donate.html";
+}
+
+function goCollab() {
+  window.location.href = "collab.html";
+}
+
+function searchNGO() {
+  let input = document.getElementById("search").value.toLowerCase();
+  let cards = document.querySelectorAll(".card");
+
+  cards.forEach(card => {
+    let text = card.innerText.toLowerCase();
+    card.style.display = text.includes(input) ? "block" : "none";
+  });
+}
+
+function filterRegion(region) {
+  filterAll(region, null);
+}
+
+function filterType(type) {
+  filterAll(null, type);
+}
+
+function filterAll(region, type) {
+  let cards = document.querySelectorAll(".card");
+
+  cards.forEach(card => {
+    let match = true;
+
+    if (region && region !== "all") {
+      match = card.dataset.region === region;
+    }
+
+    if (type && type !== "all") {
+      match = match && card.dataset.type === type;
+    }
+
+    card.style.display = match ? "block" : "none";
+  });
+}
+</script>
+
+</body>
+</html>

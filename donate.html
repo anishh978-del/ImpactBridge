@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Donate</title>
+
+<!-- CONNECT CSS -->
+<link rel="stylesheet" href="donate.css">
+</head>
+
+<body>
+
+<h1>Donate & Make Impact ❤️</h1>
+
+<div class="main-container">
+
+  <!-- LEFT SIDE (CARDS) -->
+  <div class="left">
+
+    <div class="cause-grid">
+
+      <div class="cause-card" data-state="assam" onclick="selectCause(this, 'Flood Relief - Assam')">
+        <h3>Flood Relief - Assam</h3>
+        <p class="high">🔴 High Urgency</p>
+      </div>
+
+      <div class="cause-card" data-state="bihar" onclick="selectCause(this, 'Education - Bihar')">
+        <h3>Education - Bihar</h3>
+        <p class="medium">🟠 Medium Urgency</p>
+      </div>
+
+      <div class="cause-card" data-state="up" onclick="selectCause(this, 'Women Safety - UP')">
+        <h3>Women Safety - UP</h3>
+        <p class="high">🔴 High Urgency</p>
+      </div>
+
+      <div class="cause-card" data-state="gujarat" onclick="selectCause(this, 'Sugar Control - Gujarat')">
+        <h3>Sugar Control - Gujarat</h3>
+        <p class="high">🔴 High Urgency</p>
+      </div>
+
+      <div class="cause-card" data-state="maharashtra" onclick="selectCause(this, 'Malnutrition - Maharashtra')">
+        <h3>Malnutrition - Maharashtra</h3>
+        <p class="high">🔴 High Urgency</p>
+      </div>
+
+      <div class="cause-card" data-state="rajasthan" onclick="selectCause(this, 'Clean Water - Rajasthan')">
+        <h3>Clean Water - Rajasthan</h3>
+        <p class="medium">🟠 Medium Urgency</p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- RIGHT SIDE -->
+  <div class="right">
+
+    <!-- FILTER -->
+    <div class="filter">
+      <select onchange="filterState(this.value)">
+        <option value="all">All States</option>
+        <option value="assam">Assam</option>
+        <option value="bihar">Bihar</option>
+        <option value="up">UP</option>
+        <option value="gujarat">Gujarat</option>
+        <option value="maharashtra">Maharashtra</option>
+        <option value="rajasthan">Rajasthan</option>
+      </select>
+    </div>
+
+    <!-- FORM -->
+    <div class="form-box">
+      <h2>Donate Now</h2>
+
+      <form onsubmit="submitForm(event)">
+        <input type="text" id="cause" placeholder="Selected Cause" readonly required>
+        <input type="text" id="name" placeholder="Your Name" required>
+        <input type="tel" id="phone" placeholder="Phone Number" required>
+        <input type="number" id="amount" placeholder="Amount (₹)" required>
+
+        <button type="submit">Proceed to Payment</button>
+      </form>
+
+      <a href="index.html" class="back">← Back</a>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- SCRIPT -->
+<script>
+
+// SELECT CAUSE
+function selectCause(card, causeName) {
+  document.querySelectorAll(".cause-card").forEach(c => c.classList.remove("active"));
+  card.classList.add("active");
+  document.getElementById("cause").value = causeName;
+}
+
+// FILTER
+function filterState(state) {
+  let cards = document.querySelectorAll(".cause-card");
+
+  cards.forEach(card => {
+    if (state === "all" || card.dataset.state === state) {
+      card.style.display = "block";
+    } else {
+      card.style.display = "none";
+    }
+  });
+}
+
+// SUBMIT FORM
+function submitForm(e) {
+  e.preventDefault();
+
+  let donation = {
+    cause: document.getElementById("cause").value,
+    name: document.getElementById("name").value,
+    phone: document.getElementById("phone").value,
+    amount: document.getElementById("amount").value,
+    date: new Date().toLocaleString()
+  };
+
+  localStorage.setItem("currentDonation", JSON.stringify(donation));
+
+  window.location.href = "payment.html";
+}
+
+</script>
+
+</body>
+</html>

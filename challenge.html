@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Challenge Sharing Board</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #0f172a;
+  color: white;
+  padding: 20px;
+}
+
+/* CONTAINER */
+.container {
+  max-width: 1100px;
+  margin: auto;
+}
+
+/* TITLE */
+h1 {
+  text-align: center;
+}
+
+.sub {
+  text-align: center;
+  opacity: 0.7;
+  margin-bottom: 30px;
+}
+
+/* FILTERS */
+.filters {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.filters button {
+  margin: 5px;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  background: #1e293b;
+  color: white;
+}
+
+.filters button:hover {
+  background: #22c55e;
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* CARD */
+.card {
+  background: rgba(255,255,255,0.08);
+  padding: 20px;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card h3 {
+  margin-bottom: 5px;
+}
+
+/* BADGES */
+.high { color: #ef4444; }
+.medium { color: #f97316; }
+.low { color: #22c55e; }
+
+/* BUTTON */
+.btn {
+  margin-top: 10px;
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #22c55e;
+  color: white;
+}
+
+/* PROGRESS BAR */
+.bar {
+  background: #1e293b;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.fill {
+  height: 10px;
+  background: #22c55e;
+}
+
+/* FORM */
+.form-box {
+  margin-top: 40px;
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 8px;
+  margin: 8px 0;
+  border-radius: 5px;
+  border: none;
+}
+
+/* BACK */
+.back {
+  display: block;
+  text-align: center;
+  margin-top: 30px;
+  color: #38bdf8;
+  text-decoration: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>💡 Challenge Sharing Board</h1>
+<p class="sub">NGOs share problems. Others provide solutions.</p>
+
+<!-- FILTERS -->
+<div class="filters">
+  <button onclick="filterChallenges('all')">All</button>
+  <button onclick="filterChallenges('funding')">Funding</button>
+  <button onclick="filterChallenges('tech')">Technology</button>
+  <button onclick="filterChallenges('operations')">Operations</button>
+</div>
+
+<!-- CHALLENGES -->
+<div class="grid" id="challengeList">
+
+  <!-- CARD 1 -->
+  <div class="card" data-type="funding">
+    <div>
+      <h3>Nutrition Program Funding</h3>
+      <p>Bihar • NGO: Rural Help</p>
+      <p class="high">🔴 High Urgency</p>
+      <p>Need ₹2,00,000 to run child nutrition program.</p>
+    </div>
+
+    <div>
+      <p>Responses: <span id="res1">2</span>/5</p>
+      <div class="bar"><div class="fill" style="width:40%"></div></div>
+      <button class="btn" onclick="respond('res1')">Respond</button>
+    </div>
+  </div>
+
+  <!-- CARD 2 -->
+  <div class="card" data-type="tech">
+    <div>
+      <h3>Need Digital Tools</h3>
+      <p>MP • NGO: Tech4Good</p>
+      <p class="medium">🟠 Medium Urgency</p>
+      <p>Lack of software for data tracking.</p>
+    </div>
+
+    <div>
+      <p>Responses: <span id="res2">1</span>/5</p>
+      <div class="bar"><div class="fill" style="width:20%"></div></div>
+      <button class="btn" onclick="respond('res2')">Offer Help</button>
+    </div>
+  </div>
+
+  <!-- CARD 3 -->
+  <div class="card" data-type="operations">
+    <div>
+      <h3>Volunteer Shortage</h3>
+      <p>UP • NGO: Youth Care</p>
+      <p class="low">🟢 Low Urgency</p>
+      <p>Need volunteers for education program.</p>
+    </div>
+
+    <div>
+      <p>Responses: <span id="res3">3</span>/5</p>
+      <div class="bar"><div class="fill" style="width:60%"></div></div>
+      <button class="btn" onclick="respond('res3')">Help</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- SUBMIT FORM -->
+<div class="form-box">
+  <h2>➕ Submit a Challenge</h2>
+
+  <form onsubmit="submitChallenge(event)">
+    <input type="text" placeholder="NGO Name" required>
+    <input type="text" placeholder="Challenge Title" required>
+    
+    <textarea placeholder="Describe the challenge..." required></textarea>
+
+    <select required>
+      <option value="">Select Category</option>
+      <option>Funding</option>
+      <option>Operations</option>
+      <option>Technology</option>
+    </select>
+
+    <select required>
+      <option value="">Urgency Level</option>
+      <option>High</option>
+      <option>Medium</option>
+      <option>Low</option>
+    </select>
+
+    <button class="btn">Submit</button>
+  </form>
+</div>
+
+<a href="index.html" class="back">← Back to Home</a>
+
+</div>
+
+<script>
+function respond(id) {
+  let el = document.getElementById(id);
+  let count = parseInt(el.innerText);
+  if (count < 5) {
+    count++;
+    el.innerText = count;
+    alert("Response recorded!");
+  }
+}
+
+function filterChallenges(type) {
+  let cards = document.querySelectorAll(".card");
+
+  cards.forEach(card => {
+    if (type === "all" || card.dataset.type === type) {
+      card.style.display = "block";
+    } else {
+      card.style.display = "none";
+    }
+  });
+}
+
+function submitChallenge(e) {
+  e.preventDefault();
+  alert("Challenge submitted successfully!");
+}
+</script>
+
+</body>
+</html>
