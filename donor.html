@@ -2,157 +2,256 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Donor Dashboard</title>
+<title>Elite Donor Dashboard</title>
+
+<!-- CHART -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- MAP -->
+<script src="https://www.gstatic.com/charts/loader.js"></script>
 
 <style>
-body {
-  font-family: Arial;
-  background: #0f172a;
-  color: white;
-  padding: 20px;
+body{
+  background:linear-gradient(135deg,#0f172a,#1e3a8a);
+  color:white;
+  font-family:Arial;
+  padding:30px;
 }
 
-/* CONTAINER */
-.container {
-  max-width: 1000px;
-  margin: auto;
+h1{text-align:center;margin-bottom:20px;}
+
+.dashboard{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
 }
 
-/* TITLE */
-h1 {
-  text-align: center;
+.card{
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(15px);
+  padding:20px;
+  border-radius:12px;
 }
 
-.sub {
-  text-align: center;
-  opacity: 0.7;
-  margin-bottom: 30px;
+.chart-box{
+  margin-top:40px;
+  background:rgba(255,255,255,0.05);
+  padding:20px;
+  border-radius:12px;
 }
 
-/* SUMMARY BOXES */
-.summary {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  margin-bottom: 40px;
+.chart-container{
+  max-width:600px;
+  height:300px;
+  margin:20px auto;
 }
 
-.box {
-  background: rgba(255,255,255,0.08);
-  padding: 20px;
-  border-radius: 12px;
-  text-align: center;
+.top-card{
+  background:rgba(255,255,255,0.05);
+  padding:10px;
+  margin:8px 0;
+  border-radius:8px;
 }
 
-.box h2 {
-  color: #22c55e;
-}
-
-/* TABLE */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-th, td {
-  padding: 10px;
-  border-bottom: 1px solid #334155;
-  text-align: center;
-}
-
-th {
-  background: #1e293b;
-}
-
-/* BUTTON */
-button {
-  margin-top: 20px;
-  padding: 10px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  background: #ef4444;
-  color: white;
-}
-
-/* BACK */
-.back {
-  display: block;
-  text-align: center;
-  margin-top: 20px;
-  color: #38bdf8;
-  text-decoration: none;
+.reset-btn{
+  margin-top:20px;
+  padding:10px;
+  background:#ef4444;
+  border:none;
+  color:white;
+  border-radius:6px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<h1>🚀 Donor Dashboard</h1>
 
-<h1>📊 Donor Dashboard</h1>
-<p class="sub">Track your contributions and impact</p>
+<div class="dashboard">
 
-<!-- SUMMARY -->
-<div class="summary">
-  <div class="box">
-    <h3>Total Donated</h3>
-    <h2 id="totalAmount">₹0</h2>
-  </div>
-
-  <div class="box">
-    <h3>Total Donations</h3>
-    <h2 id="totalCount">0</h2>
-  </div>
+<div class="card">
+<h3>Total</h3>
+<h2 id="total"></h2>
 </div>
 
-<!-- TABLE -->
-<h2>Recent Donations</h2>
+<div class="card">
+<h3>Top NGO</h3>
+<h2 id="topNGO"></h2>
+</div>
 
-<table id="donationTable">
-  <tr>
-    <th>Date</th>
-    <th>Cause</th>
-    <th>Amount</th>
-  </tr>
+<div class="card">
+<h3>Donations</h3>
+<h2 id="count"></h2>
+</div>
+
+<div class="card">
+<h3>Recent</h3>
+<p id="recent"></p>
+</div>
+
+<div class="card">
+<h3>🤖 AI Suggestion</h3>
+<h2 id="aiNGO"></h2>
+<p id="aiReason"></p>
+</div>
+
+</div>
+
+<button class="reset-btn" onclick="resetData()">Reset Data</button>
+
+<h2>🏆 Top Donors</h2>
+<div id="topList"></div>
+
+<h2>📜 History</h2>
+<table width="100%" border="1">
+<tbody id="table"></tbody>
 </table>
 
-<!-- RESET BUTTON -->
-<button onclick="clearData()">Reset Data</button>
+<!-- CHARTS -->
+<div class="chart-box">
+<h2>📊 Charts</h2>
+<div class="chart-container"><canvas id="bar"></canvas></div>
+<div class="chart-container"><canvas id="pie"></canvas></div>
+<div class="chart-container"><canvas id="line"></canvas></div>
+</div>
 
-<a href="index.html" class="back">← Back to Home</a>
-
+<!-- MAP -->
+<div class="chart-box">
+<h2>🌍 Click State to Donate</h2>
+<div id="indiaMap" style="width:100%;height:400px;"></div>
 </div>
 
 <script>
-// LOAD DATA
+
 let donations = JSON.parse(localStorage.getItem("donations")) || [];
 
-let total = 0;
-let table = document.getElementById("donationTable");
+// TOTAL
+let total=0;
+donations.forEach(d=> total+=Number(d.amount));
+document.getElementById("total").innerText="₹"+total;
 
-donations.forEach(d => {
-  total += d.amount;
+// COUNT
+document.getElementById("count").innerText=donations.length;
 
-  let row = table.insertRow();
-  row.innerHTML = `
-    <td>${d.date}</td>
-    <td>${d.cause}</td>
-    <td>₹${d.amount}</td>
-  `;
+// RECENT
+if(donations.length){
+ let last=donations[donations.length-1];
+ document.getElementById("recent").innerText=
+ `${last.donor} → ₹${last.amount}`;
+}
+
+// NGO TOTALS
+let ngoTotals={};
+donations.forEach(d=>{
+ if(!ngoTotals[d.ngo]) ngoTotals[d.ngo]=0;
+ ngoTotals[d.ngo]+=Number(d.amount);
 });
 
-// UPDATE SUMMARY
-document.getElementById("totalAmount").innerText = "₹" + total;
-document.getElementById("totalCount").innerText = donations.length;
-
-// CLEAR DATA
-function clearData() {
-  localStorage.removeItem("donations");
-  location.reload();
+// TOP NGO
+let topNGO="";
+let max=0;
+for(let n in ngoTotals){
+ if(ngoTotals[n]>max){max=ngoTotals[n];topNGO=n;}
 }
+document.getElementById("topNGO").innerText=topNGO;
+
+// TOP DONORS
+donations.sort((a,b)=>b.amount-a.amount);
+let html="";
+donations.slice(0,5).forEach(d=>{
+ html+=`<div class="top-card">₹${d.amount} - ${d.donor}</div>`;
+});
+document.getElementById("topList").innerHTML=html;
+
+// AI
+function getAI(){
+ if(donations.length===0){
+  return {ngo:"Pratham",reason:"Start donating 📚"};
+ }
+ return {ngo:topNGO,reason:"Most impactful NGO 🔥"};
+}
+let ai=getAI();
+document.getElementById("aiNGO").innerText=ai.ngo;
+document.getElementById("aiReason").innerText=ai.reason;
+
+// CHARTS
+let labels=Object.keys(ngoTotals);
+let data=Object.values(ngoTotals);
+
+new Chart(document.getElementById("bar"),{
+ type:"bar",
+ data:{labels:labels,datasets:[{data:data}]}
+});
+
+new Chart(document.getElementById("pie"),{
+ type:"doughnut",
+ data:{labels:labels,datasets:[{data:data}]}
+});
+
+// LINE
+let dateTotals={};
+donations.forEach(d=>{
+ if(!dateTotals[d.date]) dateTotals[d.date]=0;
+ dateTotals[d.date]+=Number(d.amount);
+});
+
+new Chart(document.getElementById("line"),{
+ type:"line",
+ data:{
+  labels:Object.keys(dateTotals),
+  datasets:[{data:Object.values(dateTotals)}]
+ }
+});
+
+// RESET
+function resetData(){
+ if(confirm("Delete all?")){
+  localStorage.clear();
+  location.reload();
+ }
+}
+
+// MAP
+google.charts.load('current',{packages:['geochart']});
+google.charts.setOnLoadCallback(drawMap);
+
+function drawMap(){
+
+ let stateTotals={};
+
+ donations.forEach(d=>{
+  let state=d.state||"Karnataka";
+  if(!stateTotals[state]) stateTotals[state]=0;
+  stateTotals[state]+=Number(d.amount);
+ });
+
+ let arr=[['State','Donations']];
+ for(let s in stateTotals){
+  arr.push([s,stateTotals[s]]);
+ }
+
+ let data=google.visualization.arrayToDataTable(arr);
+
+ let chart=new google.visualization.GeoChart(document.getElementById('indiaMap'));
+
+ chart.draw(data,{
+  region:'IN',
+  resolution:'provinces'
+ });
+
+ // CLICK EVENT
+ google.visualization.events.addListener(chart,'select',function(){
+  let sel=chart.getSelection();
+  if(sel.length>0){
+   let state=data.getValue(sel[0].row,0);
+   localStorage.setItem("selectedState",state);
+   window.location.href="donate.html";
+  }
+ });
+
+}
+
 </script>
 
 </body>

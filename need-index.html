@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NGO Need Index</title>
+
+<style>
+
+/* BODY */
+body {
+  background: #0f172a;
+  color: white;
+  font-family: Arial;
+  padding: 30px;
+}
+
+/* TITLE */
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* FILTERS */
+.filters {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+select {
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+/* CARD */
+.card {
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 12px;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  background: #334155;
+}
+
+/* BAR */
+.bar {
+  background: #334155;
+  height: 10px;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+
+.fill {
+  height: 10px;
+  border-radius: 5px;
+}
+
+/* COLORS */
+.high { background: #ef4444; }
+.medium { background: #f97316; }
+.low { background: #22c55e; }
+
+/* BUTTON */
+button {
+  margin-top: 10px;
+  padding: 10px;
+  width: 100%;
+  border: none;
+  border-radius: 6px;
+  background: #22c55e;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #16a34a;
+}
+
+/* BACK */
+.back {
+  display: block;
+  text-align: center;
+  margin-top: 30px;
+  color: #38bdf8;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>⚡ NGO Need Index</h1>
+
+<!-- FILTERS -->
+<div class="filters">
+  <select onchange="filterState(this.value)">
+    <option value="all">All States</option>
+    <option value="Assam">Assam</option>
+    <option value="Bihar">Bihar</option>
+    <option value="UP">UP</option>
+    <option value="Rajasthan">Rajasthan</option>
+  </select>
+
+  <select onchange="filterPriority(this.value)">
+    <option value="all">All Priority</option>
+    <option value="high">High</option>
+    <option value="medium">Medium</option>
+    <option value="low">Low</option>
+  </select>
+</div>
+
+<!-- CARDS -->
+<div class="grid" id="grid">
+
+  <div class="card" data-state="Assam" data-priority="high">
+    <h3>Flood Relief - Assam</h3>
+    <p>Need Score: 92%</p>
+    <div class="bar">
+      <div class="fill high" style="width:92%"></div>
+    </div>
+    <p>Urgency: 🔴 High</p>
+    <p>Impact: 25,000+ people</p>
+    <button onclick="donate('Flood Relief - Assam')">Donate</button>
+  </div>
+
+  <div class="card" data-state="Bihar" data-priority="high">
+    <h3>Education - Bihar</h3>
+    <p>Need Score: 85%</p>
+    <div class="bar">
+      <div class="fill high" style="width:85%"></div>
+    </div>
+    <p>Urgency: 🔴 High</p>
+    <p>Impact: 15,000+ students</p>
+    <button onclick="donate('Education - Bihar')">Donate</button>
+  </div>
+
+  <div class="card" data-state="UP" data-priority="medium">
+    <h3>Women Safety - UP</h3>
+    <p>Need Score: 70%</p>
+    <div class="bar">
+      <div class="fill medium" style="width:70%"></div>
+    </div>
+    <p>Urgency: 🟠 Medium</p>
+    <p>Impact: 10,000+ women</p>
+    <button onclick="donate('Women Safety - UP')">Donate</button>
+  </div>
+
+  <div class="card" data-state="Rajasthan" data-priority="medium">
+    <h3>Clean Water - Rajasthan</h3>
+    <p>Need Score: 65%</p>
+    <div class="bar">
+      <div class="fill medium" style="width:65%"></div>
+    </div>
+    <p>Urgency: 🟠 Medium</p>
+    <p>Impact: 8,000+ families</p>
+    <button onclick="donate('Clean Water - Rajasthan')">Donate</button>
+  </div>
+
+  <div class="card" data-state="Gujarat" data-priority="low">
+    <h3>Diabetes Care - Gujarat</h3>
+    <p>Need Score: 50%</p>
+    <div class="bar">
+      <div class="fill low" style="width:50%"></div>
+    </div>
+    <p>Urgency: 🟢 Low</p>
+    <p>Impact: 5,000+ patients</p>
+    <button onclick="donate('Diabetes Care - Gujarat')">Donate</button>
+  </div>
+
+</div>
+
+<a href="index.html" class="back">← Back to Home</a>
+
+<script>
+
+// FILTER STATE
+function filterState(state){
+  let cards = document.querySelectorAll(".card");
+  cards.forEach(card=>{
+    if(state === "all" || card.dataset.state === state){
+      card.style.display = "block";
+    } else {
+      card.style.display = "none";
+    }
+  });
+}
+
+// FILTER PRIORITY
+function filterPriority(priority){
+  let cards = document.querySelectorAll(".card");
+  cards.forEach(card=>{
+    if(priority === "all" || card.dataset.priority === priority){
+      card.style.display = "block";
+    } else {
+      card.style.display = "none";
+    }
+  });
+}
+
+// DONATE
+function donate(name){
+  localStorage.setItem("selectedNGO", name);
+  window.location.href = "donate.html";
+}
+
+</script>
+
+</body>
+</html>

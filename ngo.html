@@ -2,242 +2,135 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Verified NGOs</title>
 
 <style>
 body {
+  background:#0f172a;
+  color:white;
   font-family: Arial;
-  background: #0f172a;
-  color: white;
-  padding: 20px;
+  padding:20px;
 }
 
-.container {
-  max-width: 1200px;
-  margin: auto;
-}
-
-/* TITLE */
 h1 {
-  text-align: center;
+  text-align:center;
+  margin-bottom:30px;
 }
 
-.sub {
-  text-align: center;
-  opacity: 0.7;
-  margin-bottom: 20px;
-}
-
-/* SEARCH + FILTER */
-.controls {
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-input, select {
-  padding: 8px;
-  margin: 5px;
-  border-radius: 6px;
-  border: none;
-}
-
-/* GRID */
 .grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 20px;
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:20px;
 }
 
-/* CARD */
 .card {
-  background: rgba(255,255,255,0.08);
-  padding: 20px;
-  border-radius: 12px;
-  backdrop-filter: blur(10px);
-  transition: 0.3s;
+  background:#1e293b;
+  padding:15px;
+  border-radius:10px;
+  text-align:center;
 }
 
-.card:hover {
-  transform: scale(1.05);
+.card img {
+  width:100%;
+  height:150px;
+  object-fit:cover;
+  border-radius:8px;
 }
 
-/* VERIFIED BADGE */
-.badge {
-  color: #22c55e;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-/* PROGRESS BAR */
-.bar {
-  background: #1e293b;
-  border-radius: 10px;
-  overflow: hidden;
-  margin: 8px 0;
-}
-
-.fill {
-  height: 8px;
-  background: #22c55e;
-}
-
-/* BUTTONS */
-.btn {
-  margin-top: 8px;
-  padding: 6px 10px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.green { background: #22c55e; color: white; }
-.blue { background: #3b82f6; color: white; }
-.orange { background: #f97316; color: white; }
-
-/* BACK */
-.back {
-  display: block;
-  text-align: center;
-  margin-top: 30px;
-  color: #38bdf8;
-  text-decoration: none;
+button {
+  margin-top:10px;
+  padding:10px;
+  background:#22c55e;
+  border:none;
+  color:white;
+  border-radius:5px;
+  cursor:pointer;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<h1>Verified NGOs – Trusted Partners</h1>
 
-<h1>✅ Verified NGOs</h1>
-<p class="sub">Trusted Partners for Impact</p>
+<div class="grid">
 
-<!-- SEARCH + FILTER -->
-<div class="controls">
-  <input type="text" id="search" placeholder="Search NGO..." onkeyup="searchNGO()">
-
-  <select onchange="filterRegion(this.value)">
-    <option value="all">All Regions</option>
-    <option value="north">North</option>
-    <option value="south">South</option>
-  </select>
-
-  <select onchange="filterType(this.value)">
-    <option value="all">All Focus</option>
-    <option value="education">Education</option>
-    <option value="health">Health</option>
-  </select>
+<!-- 1 -->
+<div class="card">
+<img src="phots/pratham.png">
+<h3>Pratham</h3>
+<p>Education | Maharashtra</p>
+<button onclick="viewNGO('Pratham')">View More</button>
 </div>
 
-<!-- NGO GRID -->
-<div class="grid" id="ngoList">
-
-  <!-- NGO 1 -->
-  <div class="card" data-region="north" data-type="education">
-    <h3>SEWA <span class="badge" title="Verified by platform – compliance checked">✔</span></h3>
-    <p>Gujarat</p>
-    <p>Focus: Women Empowerment</p>
-    <p>Impact: 50,000+ women supported</p>
-
-    <p>Funding:</p>
-    <div class="bar"><div class="fill" style="width:70%"></div></div>
-
-    <p>Compliance: ✔ FCRA Approved</p>
-    <p>Last Report: Mar 2026</p>
-
-    <button class="btn green" onclick="goDonate()">Donate</button>
-    <button class="btn blue" onclick="goCollab()">Collaborate</button>
-    <button class="btn orange">View Profile</button>
-  </div>
-
-  <!-- NGO 2 -->
-  <div class="card" data-region="north" data-type="education">
-    <h3>Pratham <span class="badge" title="Verified by platform – transparency checked">✔</span></h3>
-    <p>Delhi</p>
-    <p>Focus: Education</p>
-    <p>Impact: 1M+ children reached</p>
-
-    <p>Funding:</p>
-    <div class="bar"><div class="fill" style="width:60%"></div></div>
-
-    <p>Compliance: ✔ CSR Partner</p>
-    <p>Last Report: Feb 2026</p>
-
-    <button class="btn green" onclick="goDonate()">Donate</button>
-    <button class="btn blue" onclick="goCollab()">Collaborate</button>
-    <button class="btn orange">View Profile</button>
-  </div>
-
-  <!-- NGO 3 -->
-  <div class="card" data-region="south" data-type="health">
-    <h3>HealthFirst <span class="badge" title="Verified by platform – compliance checked">✔</span></h3>
-    <p>Karnataka</p>
-    <p>Focus: Healthcare</p>
-    <p>Impact: 20,000 patients treated</p>
-
-    <p>Funding:</p>
-    <div class="bar"><div class="fill" style="width:40%"></div></div>
-
-    <p>Compliance: ✔ FCRA Approved</p>
-    <p>Last Report: Jan 2026</p>
-
-    <button class="btn green" onclick="goDonate()">Donate</button>
-    <button class="btn blue" onclick="goCollab()">Collaborate</button>
-    <button class="btn orange">View Profile</button>
-  </div>
-
+<!-- 2 -->
+<div class="card">
+<img src="phots/seva.png">
+<h3>SEWA</h3>
+<p>Women Empowerment | Gujarat</p>
+<button onclick="viewNGO('SEWA')">View More</button>
 </div>
 
-<a href="index.html" class="back">← Back to Home</a>
+<!-- 3 -->
+<div class="card">
+<img src="phots/goon.png">
+<h3>Goonj</h3>
+<p>Disaster Relief | Delhi</p>
+<button onclick="viewNGO('Goonj')">View More</button>
+</div>
+
+<!-- ADD MORE BELOW -->
+
+
+<div class="card"><img src="phots/aksh.png"><h3>Akshaya Patra</h3><p>Food | Karnataka</p><button onclick="viewNGO('Akshaya')">View More</button></div>
+
+<div class="card"><img src="phots/cry.png"><h3>Cry</h3><p>Child Rights | India</p><button onclick="viewNGO('CRY')">View More</button></div>
+
+<div class="card"><img src="phots/tech.png"><h3>Teach For India</h3><p>Education | India</p><button onclick="viewNGO('TFI')">View More</button></div>
+
+<div class="card"><img src="phots/smile.png"><h3>Smile Foundation</h3><p>Healthcare | India</p><button onclick="viewNGO('Smile')">View More</button></div>
+
+<div class="card"><img src="phots/help.png"><h3>HelpAge India</h3><p>Elder Care | India</p><button onclick="viewNGO('HelpAge')">View More</button></div>
+
+<div class="card"><img src="phots/digital.png"><h3>Digital Green</h3><p>Technology | Rural</p><button onclick="viewNGO('Digital')">View More</button></div>
+
+<div class="card"><img src="phots/water.png"><h3>WaterAid</h3><p>Water | India</p><button onclick="viewNGO('WaterAid')">View More</button></div>
+
+<div class="card"><img src="phots/care.png"><h3>CARE India</h3><p>Health | India</p><button onclick="viewNGO('CARE')">View More</button></div>
+
+<div class="card"><img src="phots/oxfam.png"><h3>Oxfam India</h3><p>Livelihood | India</p><button onclick="viewNGO('Oxfam')">View More</button></div>
+
+<div class="card"><img src="phots/give.png"><h3>GiveIndia</h3><p>Funding | India</p><button onclick="viewNGO('GiveIndia')">View More</button></div>
+
+<div class="card"><img src="phots/udaan.png"><h3>Udaan</h3><p>Youth | India</p><button onclick="viewNGO('Udaan')">View More</button></div>
+
+<div class="card"><img src="phots/gram.png"><h3>Gram Vikas</h3><p>Rural Dev | Odisha</p><button onclick="viewNGO('Gram')">View More</button></div>
 
 </div>
 
 <script>
-function goDonate() {
-  window.location.href = "donate.html";
-}
-
-function goCollab() {
-  window.location.href = "collab.html";
-}
-
-function searchNGO() {
-  let input = document.getElementById("search").value.toLowerCase();
-  let cards = document.querySelectorAll(".card");
-
-  cards.forEach(card => {
-    let text = card.innerText.toLowerCase();
-    card.style.display = text.includes(input) ? "block" : "none";
-  });
-}
-
-function filterRegion(region) {
-  filterAll(region, null);
-}
-
-function filterType(type) {
-  filterAll(null, type);
-}
-
-function filterAll(region, type) {
-  let cards = document.querySelectorAll(".card");
-
-  cards.forEach(card => {
-    let match = true;
-
-    if (region && region !== "all") {
-      match = card.dataset.region === region;
-    }
-
-    if (type && type !== "all") {
-      match = match && card.dataset.type === type;
-    }
-
-    card.style.display = match ? "block" : "none";
-  });
+function viewNGO(name){
+  localStorage.setItem("ngoName", name);
+  window.location.href = "ngo-details.html";
 }
 </script>
 
 </body>
 </html>
+<div id="ngoList"></div>
+
+<script>
+const ngos = JSON.parse(localStorage.getItem("ngoApplications")) || [];
+
+const container = document.getElementById("ngoList");
+
+ngos.forEach(n => {
+  container.innerHTML += `
+    <div class="card">
+      <h3>${n.name}</h3>
+      <p>${n.location}</p>
+      <p>${n.focus}</p>
+    </div>
+  `;
+});
+</script>

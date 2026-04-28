@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NGO Details</title>
+
+<style>
+body {
+  background:#0f172a;
+  color:white;
+  font-family:Arial;
+  padding:20px;
+}
+
+.container {
+  max-width:900px;
+  margin:auto;
+  background:#1e293b;
+  padding:25px;
+  border-radius:12px;
+}
+
+/* HEADER */
+.header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+h2 {
+  color:#22c55e;
+}
+
+/* SECTIONS */
+.section {
+  margin-top:25px;
+}
+
+/* IMPACT CARDS */
+.stats {
+  display:grid;
+  grid-template-columns: repeat(3,1fr);
+  gap:15px;
+  margin-top:10px;
+}
+
+.stat-box {
+  background:#334155;
+  padding:15px;
+  border-radius:10px;
+  text-align:center;
+}
+
+/* GRAPH */
+.chart-container {
+  display:flex;
+  align-items:center;
+  justify-content:space-around;
+  margin-top:20px;
+}
+
+canvas {
+  width:150px !important;
+  height:150px !important;
+}
+
+/* BUTTONS */
+button {
+  padding:10px 15px;
+  border:none;
+  border-radius:6px;
+  margin-right:10px;
+  cursor:pointer;
+}
+
+.btn1 { background:#22c55e; color:white; }
+.btn2 { background:#3b82f6; color:white; }
+.btn3 { background:#f59e0b; color:white; }
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- HEADER -->
+<div class="header">
+  <div>
+    <h2>Pratham ✅</h2>
+    <p>📍 Maharashtra | Founded: 1995</p>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div class="section">
+<h3>About</h3>
+<p>
+Pratham is one of India’s largest NGOs focused on improving learning outcomes 
+for children through innovative education models.
+</p>
+</div>
+
+<!-- IMPACT -->
+<div class="section">
+<h3>Impact</h3>
+
+<div class="stats">
+  <div class="stat-box">
+    <h3>50K+</h3>
+    <p>Children</p>
+  </div>
+  <div class="stat-box">
+    <h3>1200+</h3>
+    <p>Schools</p>
+  </div>
+  <div class="stat-box">
+    <h3>12</h3>
+    <p>States</p>
+  </div>
+</div>
+
+</div>
+
+<!-- FUNDING GRAPH -->
+<div class="section">
+<h3>Funding Progress</h3>
+
+<div class="chart-container">
+  <canvas id="fundChart"></canvas>
+
+  <div>
+    <p><b>Goal:</b> ₹10,00,000</p>
+    <p><b>Raised:</b> ₹7,50,000</p>
+    <p><b>Remaining:</b> ₹2,50,000</p>
+  </div>
+</div>
+
+</div>
+
+<!-- PROGRAMS -->
+<div class="section">
+<h3>Programs</h3>
+<p>• Digital Classrooms</p>
+<p>• Read India Campaign</p>
+<p>• Teacher Training</p>
+</div>
+
+<!-- URGENT -->
+<div class="section">
+<h3>Urgent Needs</h3>
+<p>🔴 ₹2,00,000 needed for Bihar expansion</p>
+<p>🟠 Volunteers required</p>
+</div>
+
+<!-- BUTTONS -->
+<div class="section">
+<button class="btn1" onclick="goDonate()">Donate Now</button>
+<button class="btn2" onclick="goCollab()">Collaborate</button>
+<button class="btn3">Follow NGO</button>
+</div>
+
+<br>
+<a href="ngo.html">← Back</a>
+
+</div>
+
+<!-- CHART SCRIPT -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+const ctx = document.getElementById('fundChart');
+
+new Chart(ctx, {
+  type: 'doughnut',
+  data: {
+    labels: ['Raised', 'Remaining'],
+    datasets: [{
+      data: [750000, 250000],
+      backgroundColor: ['#22c55e', '#334155'],
+      borderWidth: 0
+    }]
+  },
+  options: {
+    plugins: {
+      legend: { display: false }
+    },
+    cutout: '70%'
+  }
+});
+</script>
+
+
+</body>
+</html>
+<script>
+function goDonate(){
+  let ngo = document.getElementById("name") 
+            ? document.getElementById("name").innerText 
+            : "Pratham";
+
+  localStorage.setItem("selectedNGO", ngo);
+  window.location.href = "donate.html";
+}
+
+function goCollab(){
+  let ngo = document.getElementById("name") 
+            ? document.getElementById("name").innerText 
+            : "Pratham";
+
+  localStorage.setItem("collabNGO", ngo);
+  window.location.href = "collab.html";
+}
+</script>

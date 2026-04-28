@@ -37,11 +37,15 @@ button {
   cursor: pointer;
 }
 
+button:hover {
+  background: #16a34a;
+}
+
 .success {
-    
   color: #22c55e;
   margin-top: 20px;
 }
+
 /* LOADER */
 .spinner {
   border: 5px solid #334155;
@@ -69,42 +73,54 @@ button {
 <p id="amount"></p>
 
 <!-- QR IMAGE -->
-<img src="WhatsApp Image 2026-04-12 at 12.47.57 PM.jpeg" alt="Scan to Pay">
+<img src="phots/WhatsApp Image 2026-04-12 at 12.47.57 PM.jpeg" alt="Scan to Pay">
 
 <p>Scan & Pay using UPI</p>
 
 <button onclick="startPayment()">Pay Now</button>
 
+<!-- LOADER -->
 <div id="loader" style="display:none; margin-top:20px;">
   <div class="spinner"></div>
   <p>Processing Payment...</p>
 </div>
 
 <p id="status" class="success"></p>
+
+<!-- DOWNLOAD RECEIPT -->
 <button id="downloadBtn" onclick="downloadReceipt()" style="display:none; margin-top:10px;">
   Download Receipt 📄
 </button>
+
+</div>
+
 <script>
+
+// GET DATA FROM DONATE PAGE
 let donation = JSON.parse(localStorage.getItem("currentDonation"));
 
+// SHOW DATA
 if (donation) {
-  document.getElementById("cause").innerText = "Cause: " + donation.cause;
+  document.getElementById("cause").innerText = "NGO: " + donation.ngo;
   document.getElementById("amount").innerText = "Amount: ₹" + donation.amount;
 }
 
+// START PAYMENT
 function startPayment() {
   document.getElementById("loader").style.display = "block";
 
-  // fake delay like real payment
   setTimeout(() => {
     completePayment();
   }, 2500);
 }
 
+// COMPLETE PAYMENT
 function completePayment() {
   let donations = JSON.parse(localStorage.getItem("donations")) || [];
 
-  donations.push(donation);
+  if (donation) {
+    donations.push(donation);
+  }
 
   localStorage.setItem("donations", JSON.stringify(donations));
 
@@ -115,6 +131,30 @@ function completePayment() {
     window.location.href = "donor.html";
   }, 2000);
 }
+
+// DOWNLOAD RECEIPT
+function downloadReceipt() {
+
+  let text = `
+NGO CONNECT RECEIPT
+--------------------------
+NGO: ${donation.ngo}
+Donor: ${donation.name}
+Amount: ₹${donation.amount}
+Date: ${donation.date}
+--------------------------
+Thank you for your support ❤️
+`;
+
+  let blob = new Blob([text], { type: "text/plain" });
+  let link = document.createElement("a");
+
+  link.href = URL.createObjectURL(blob);
+  link.download = "receipt.txt";
+  link.click();
+}
+
 </script>
+
 </body>
 </html>

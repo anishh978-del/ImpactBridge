@@ -18,30 +18,23 @@ body {
   color: white;
 }
 
-/* HERO SECTION */
+/* HERO */
 .hero {
   text-align: center;
   padding: 80px 20px;
   background: linear-gradient(135deg, #1e3a8a, #0ea5e9);
 }
 
-.hero h1 {
-  font-size: 50px;
-  margin-bottom: 10px;
-}
+.hero h1 { font-size: 50px; margin-bottom: 10px; }
+.hero p { font-size: 18px; }
 
-.hero p {
-  font-size: 18px;
-  margin-bottom: 20px;
-}
-
+/* BUTTONS */
 .buttons button {
   margin: 10px;
   padding: 12px 20px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  font-weight: bold;
 }
 
 .btn-primary { background: #22c55e; color: white; }
@@ -55,13 +48,7 @@ body {
   background: #020617;
 }
 
-.stat {
-  text-align: center;
-}
-
-.stat h2 {
-  color: #22c55e;
-}
+.stat h2 { color: #22c55e; }
 
 /* FEATURES */
 .features {
@@ -80,16 +67,10 @@ body {
   background: #1e293b;
   padding: 20px;
   border-radius: 10px;
-  transition: 0.3s;
   cursor: pointer;
 }
 
-.card:hover {
-  transform: scale(1.05);
-  background: #334155;
-}
-
-/* URGENT NEEDS */
+/* URGENT */
 .urgent {
   padding: 60px 20px;
   background: #020617;
@@ -117,7 +98,6 @@ body {
   border: none;
   color: white;
   border-radius: 5px;
-  cursor: pointer;
 }
 
 /* CTA */
@@ -134,7 +114,6 @@ body {
   background: black;
   color: white;
   border-radius: 8px;
-  cursor: pointer;
 }
 
 /* FOOTER */
@@ -142,7 +121,6 @@ footer {
   text-align: center;
   padding: 20px;
   background: #020617;
-  font-size: 14px;
 }
 </style>
 
@@ -153,26 +131,20 @@ footer {
 <section class="hero">
   <h1>NGO Connect</h1>
   <p>Bridging Resources. Empowering Change.</p>
-  <p>Connecting donors and NGOs across India with transparency.</p>
-
-  <div class="buttons">
-    <button class="btn-primary" onclick="window.location.href='donate.html'">Donate Now</button>
-    <button class="btn-secondary" onclick="window.location.href='ngo.html'">Join as NGO</button>
-  </div>
 </section>
 
 <!-- STATS -->
 <section class="stats">
   <div class="stat">
-    <h2>₹50 Cr+</h2>
+    <h2>₹100k+</h2>
     <p>Funds Raised</p>
   </div>
   <div class="stat">
-    <h2>500+</h2>
+    <h2>15+</h2>
     <p>NGOs Connected</p>
   </div>
   <div class="stat">
-    <h2>1M+</h2>
+    <h2>10000+</h2>
     <p>Lives Impacted</p>
   </div>
 </section>
@@ -181,20 +153,39 @@ footer {
 <section class="features">
   <h2>What We Offer</h2>
 
-  <div class="feature-grid">
-    <div class="card" onclick="window.location.href='ngo.html'">✅ Verified NGO Profiles</div>
-    <div class="card" onclick="window.location.href='donor.html'">📊 Donor Dashboard</div>
-    <div class="card">⚡ NGO Need Index</div>
-    <div class="card" onclick="window.location.href='collab.html'">🤝 Collaboration Hub</div>
-    <div class="card" onclick="window.location.href='challenge.html'">💡 Challenge Sharing</div>
-    <div class="card">🎓 Capacity Building</div>
+ <div class="feature-grid">
+
+  <div class="card" onclick="location.href='ngo.html'">
+    ✅ Verified NGO Profiles
   </div>
+
+  <div class="card" onclick="location.href='donor.html'">
+    📊 Donor Dashboard
+  </div>
+
+  <div class="card" onclick="location.href='need-index.html'">
+    ⚡ NGO Need Index
+  </div>
+
+  <div class="card" onclick="location.href='collab.html'">
+    🤝 Collaboration Hub
+  </div>
+
+  <div class="card" onclick="location.href='challenge.html'">
+    💡 Challenge Sharing
+  </div>
+
+  <div class="card">
+    🎓 Capacity Building
+  </div>
+
+</div>
 </section>
 
 <!-- URGENT NEEDS -->
 <section class="urgent">
   <h2>Urgent Needs</h2>
-<br>
+
   <div class="urgent-grid">
     <div class="urgent-card">
       <h3>Flood Relief - Assam</h3>

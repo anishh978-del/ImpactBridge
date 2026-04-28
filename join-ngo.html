@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Join as NGO</title>
+
+<style>
+body {
+  background: #0f172a;
+  color: white;
+  font-family: Arial, sans-serif;
+  padding: 30px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-container {
+  max-width: 600px;
+  margin: auto;
+  background: #1e293b;
+  padding: 25px;
+  border-radius: 12px;
+}
+
+input, textarea, select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 6px;
+  border: none;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: #22c55e;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #16a34a;
+}
+
+.success {
+  display: none;
+  text-align: center;
+  margin-top: 15px;
+  color: #22c55e;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🏢 Join as NGO</h1>
+
+<div class="form-container">
+  <input type="text" placeholder="NGO Name" required>
+  <input type="text" placeholder="Location (State & District)" required>
+
+  <select>
+    <option>Select Focus Area</option>
+    <option>Education</option>
+    <option>Healthcare</option>
+    <option>Women Empowerment</option>
+    <option>Environment</option>
+  </select>
+
+  <input type="text" placeholder="Contact Person Name">
+  <input type="email" placeholder="Email Address">
+  <input type="tel" placeholder="Phone Number">
+
+  <textarea placeholder="Describe your NGO work..." rows="4"></textarea>
+
+  <button onclick="submitForm()">Submit Application</button>
+
+  <div class="success" id="successMsg">
+    ✅ Application Submitted Successfully!
+  </div>
+</div>
+
+<script>
+function submitForm() {
+  document.getElementById("successMsg").style.display = "block";
+}
+</script>
+
+</body>
+</html>
+<script>
+function submitForm() {
+  const ngo = {
+    name: document.querySelector('input[placeholder="NGO Name"]').value,
+    location: document.querySelector('input[placeholder="Location (State & District)"]').value,
+    focus: document.querySelector('select').value,
+    contact: document.querySelector('input[placeholder="Contact Person Name"]').value,
+    email: document.querySelector('input[type="email"]').value,
+    phone: document.querySelector('input[type="tel"]').value,
+    description: document.querySelector('textarea').value,
+    date: new Date().toLocaleDateString()
+  };
+
+  let ngos = JSON.parse(localStorage.getItem("ngoApplications")) || [];
+  ngos.push(ngo);
+
+  localStorage.setItem("ngoApplications", JSON.stringify(ngos));
+
+  alert("✅ NGO Application Submitted!");
+}
+</script>
